@@ -8,7 +8,7 @@ import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 
 const styles = {
 	pagination: {
-		borderTop: '1px solid rgb(224, 224, 224)'
+		borderTop: '1px solid rgb(224, 224, 224)',
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'flex-end',
@@ -18,13 +18,13 @@ const styles = {
 		alignItems: 'center',
 		height: 56,
 		marginLeft: 16,
-	}
+	},
 	pageSelect: {
 		marginLeft: 0,
 	},
 	label: {
 		color: '#999',
-		fontWeight: 300;,
+		fontWeight: 300,
 		fontSize: 12,
 	},
 	select: {
@@ -36,21 +36,33 @@ const styles = {
 	}
 }
 
+const texts = {
+	page: 'Page: ',
+	perPage: 'Per Page: ',
+	showing: 'Showing {total} of {from} to {to}'
+}
+
 class Pagination extends Component {
 	static propTypes = {
-		loadMoreEntries: PropTypes.func.isRequired,
-		rows: PropTypes.number.isRequired,
-		limit: PropTypes.number
+		onChange: PropTypes.func.isRequired,
+		total: PropTypes.number.isRequired,
+		perPage: PropTypes.number,
+		texts: PropTypes.shape({
+			page: PropTypes.string.isRequired,
+			perPage: PropTypes.string.isRequired,
+			showing: PropTypes.string.isRequired,
+		})
 	};
 
 	static defaultProps = {
-		rows: 0,
-		limit: 10
+		total: 0,
+		perPage: 10,
+		texts: texts
 	};
 
 	state = {
-		current: 1,
-		limit: 10,
+		currentPage: 1,
+		perPage: 10,
 		count: 0,
 		pages: [],
 	};
@@ -58,22 +70,22 @@ class Pagination extends Component {
 	constructor(props) {
 		super(props);
 
-		this.handleChangeLimit = this.handleChangeLimit.bind(this);
+		this.handleChangePerPage = this.handleChangePerPage.bind(this);
 		this.handleChangePage = this.handleChangePage.bind(this);
 	}
 
 	componentDidMount() {
-		this.calculatePageCount(this.props.rows)
+		this.calculatePageCount(this.props.total)
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.calculatePageCount(nextProps.rows)
+		this.calculatePageCount(nextProps.total)
 	}
 
-	calculatePageCount(rows) {
-		let {limit} = this.state,
+	calculatePageCount(total) {
+		let {perPage} = this.state,
 			pages = [],
-			count = Math.ceil(rows/limit);
+			count = Math.ceil(total/perPage);
 
 		for (var i = 1; i <= count; i++) {
 			pages.push(i);
@@ -82,43 +94,51 @@ class Pagination extends Component {
 		this.setState({pages, count});
 	}
 
-	handleChangeLimit(limit) {
-		this.setState({limit});
-		this.calculatePageCount(this.props.rows);
+	handleChangePerPage(perPage) {
+		this.setState({perPage});
+		this.calculatePageCount(this.props.total);
 
-		this.props.loadMoreEntries(this.state.current * limit, limit);
+		this.onChange(this.state.currentPage, perPage);
 	}
 
-	handleChangePage(current) {
-		let { limit, count } = this.state;
+	handleChangePage(currentPage) {
+		let { perPage, count } = this.state;
 
-		if(current < 0)
-			current = 0;
-		if(current > count)
-			current = count;
+		if(currentPage < 0)
+			currentPage = 0;
+		if(currentPage > count)
+			currentPage = count;
 
-		this.setState({current})
-		this.props.loadMoreEntries(current * limit, limit);
+		this.setState({currentPage})
+		this.onChange(currentPage, perPage);
+	}
+
+	onChange(currentPage, perPage) {
+		this.props.onChange(currentPage, perPage);
 	}
 
 	render() {
-		let { rows } = this.props,
-			{ limit, current, pages, count } = this.state;
+		let { total, texts } = this.props,
+			{ perPage, currentPage, pages, count } = this.state;
 
 
-		let end = current * limit,
-			start = end - limit;
+		let to = currentPage * perPage,
+			_from = to - perPage;
 
-		if(end > rows)
-			end = rows;
+		if(to > total)
+			to = total;
+
+		let showing = texts.showing.replace('{total}', total)
+			.replace('{from}', _from)
+			.replace('{to}', to);
 
 		return (
 			<div style={styles.pagination}>
 				<div style={Object.assign({}, styles.elements, styles.pageSelect)}>
-					<div style={styles.label}>Хуудас: </div>
+					<div style={styles.label}>{`${texts.page} `}</div>
 					<SelectField 
 						onChange={(e, idx, page) => this.handleChangePage(page)}
-						value={current}
+						value={currentPage}
 						style={styles.select} 
 						underlineStyle={styles.underline}>
 						{
@@ -132,10 +152,10 @@ class Pagination extends Component {
 					</SelectField>
 				</div>
 				<div style={styles.elements}>
-					<div style={styles.label}>1 хуудсанд харуулах: </div>
+					<div style={styles.label}>{`${texts.perPage} `}</div>
 					<SelectField 
-						onChange={(e, idx, limit) => this.handleChangeLimit(limit)}
-						value={limit}
+						onChange={(e, idx, perPage) => this.handleChangePerPage(perPage)}
+						value={perPage}
 						style={styles.select} 
 						underlineStyle={styles.underline}>
 						<MenuItem value={10} primaryText="10"/>
@@ -144,15 +164,15 @@ class Pagination extends Component {
 					</SelectField>
 				</div>
 				<div style={styles.elements}>
-					<div style={styles.label}>{ `${rows} бичлэгээс ${start} - ${end} харуулж байна. ` }</div>
+					<div style={styles.label}>{`${showing}`}</div>
 					<IconButton 
-						disabled={current === 1}
-						onTouchTap={e => this.handleChangePage(current - 1)}>
+						disabled={currentPage === 1}
+						onTouchTap={e => this.handleChangePage(currentPage - 1)}>
 						<ChevronLeft/>
 					</IconButton>
 					<IconButton 
-						disabled={current === count}
-						onTouchTap={e => this.handleChangePage(current + 1)}>
+						disabled={currentPage === count}
+						onTouchTap={e => this.handleChangePage(currentPage + 1)}>
 						<ChevronRight/>
 					</IconButton>
 				</div>
