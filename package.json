@@ -1,6 +1,6 @@
 {
   "name": "pagination-material-ui",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Pagination component for material-ui",
   "main": "index.js",
   "repository": {
