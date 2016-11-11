@@ -98,7 +98,7 @@ class Pagination extends Component {
 		this.setState({perPage});
 		this.calculatePageCount(this.props.total);
 
-		this.onChange(this.state.currentPage, perPage);
+		this.onChange(1, perPage);
 	}
 
 	handleChangePage(currentPage) {
