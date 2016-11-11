@@ -39,7 +39,7 @@ const styles = {
 const texts = {
 	page: 'Page: ',
 	perPage: 'Per Page: ',
-	showing: 'Showing {total} of {from} to {to}'
+	showing: 'Showing {from} to {to} of {total}'
 }
 
 class Pagination extends Component {
