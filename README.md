@@ -9,6 +9,26 @@ or
 yarn add pagination-material-ui
 ```
 
+```
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import Pagination from 'pagination-material-ui'
+
+class PaginationExample extends Component {
+  render() {
+    return (
+      <Pagination total={100} perPage={10} onChange={this.onChange.bind(this)}/>
+    )
+  }
+  
+  onChange(currentPage, perPage) {
+    // Do some pagination thing here
+  }
+}
+
+render(<PaginationExample/>, document.getElementById('app'));
+```
+
 
 ## Availabel Props 
 <strong>total</strong> - Total rows count. <strong>Type: number - required</strong> <br/>
