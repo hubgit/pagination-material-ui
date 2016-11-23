@@ -1,6 +1,6 @@
 {
   "name": "pagination-material-ui",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Pagination component for material-ui",
   "main": "index.js",
   "repository": {
@@ -10,9 +10,9 @@
   "author": "endigo <endigo.18@gmail.com>",
   "license": "MIT license",
   "dependencies": {
-    "material-ui": "^0.16.1",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "material-ui": "^0.16.4",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
   },
   "devDependencies": {
     "babel": "^6.5.2",
