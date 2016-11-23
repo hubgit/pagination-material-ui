@@ -18,10 +18,10 @@ var plugins = [
   defineEnvPlugin,
   new webpack.NoErrorsPlugin(),
   new webpack.optimize.UglifyJsPlugin({
-    compress: {
-        warnings: false
-    }
-})
+      compress: {
+          warnings: false
+      }
+  })
 ];
 
 var moduleLoaders = [
@@ -29,7 +29,7 @@ var moduleLoaders = [
     test: /\.js$/,
     loaders: [ 'babel' ],
     include: __dirname,
-    exclude: /node_modules/,
+    // exclude: /node_modules/,
   }
 ];
 
