@@ -30,7 +30,7 @@ render(<PaginationExample/>, document.getElementById('app'));
 ```
 
 
-## Availabel Props 
+## Available Props 
 <strong>total</strong> - Total rows count. <strong>Type: number - required</strong> <br/>
 <strong>perPage</strong> - Show rows count on per page.  <strong>Type: number - required</strong> <br/>
 <strong>onChange</strong> - Callback for page change <strong>Type: function required</strong> <br/>
