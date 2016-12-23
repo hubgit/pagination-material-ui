@@ -4,7 +4,10 @@ var webpack = require('webpack');
 var isDev = (process.env.NODE_ENV === 'development');
 
 var defineEnvPlugin = new webpack.DefinePlugin({
-  __DEV__: isDev
+  __DEV__: isDev,
+    'process.env': {
+      NODE_ENV: isDev ? 'development' : 'production'
+    }
 });
 
 var entryScripts = ['./src.js'];
@@ -14,13 +17,14 @@ var output = {
 };
 
 var plugins = [
-  defineEnvPlugin,
-  new webpack.NoErrorsPlugin(),
-  new webpack.optimize.UglifyJsPlugin({
-    compress: {
-        warnings: false
-    }
-  })
+    defineEnvPlugin,
+    new webpack.NoErrorsPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+        compress: {
+            warnings: false
+        }
+    }),
+    new webpack.optimize.DedupePlugin()
 ];
 
 var moduleLoaders = [
