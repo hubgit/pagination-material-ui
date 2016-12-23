@@ -6,7 +6,7 @@ var isDev = (process.env.NODE_ENV === 'development');
 var defineEnvPlugin = new webpack.DefinePlugin({
   __DEV__: isDev,
     'process.env': {
-      NODE_ENV: isDev ? 'development' : 'production'
+      NODE_ENV: JSON.stringify('production')
     }
 });
 
