@@ -4,23 +4,14 @@
   "description": "Pagination component for material-ui",
   "main": "index.js",
   "repository": {
-    "url": "https://github.com/ENDiGo/pagination-material-ui.git",
+    "url": "https://github.com/hubgit/pagination-material-ui.git",
     "type": "git"
   },
-  "author": "endigo <endigo.18@gmail.com>",
+  "author": "Alf Eaton <eaton.alf@gmail.com>",
   "license": "MIT license",
   "dependencies": {
     "material-ui": "^0.16.4",
     "react": "^15.4.1",
     "react-dom": "^15.4.1"
-  },
-  "devDependencies": {
-    "babel": "^6.5.2",
-    "babel-core": "^6.18.2",
-    "babel-loader": "^6.2.7",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
-    "babel-preset-stage-0": "^6.16.0",
-    "webpack": "^1.13.3"
   }
 }
