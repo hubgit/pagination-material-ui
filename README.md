@@ -15,14 +15,14 @@ import { render } from 'react-dom';
 import Pagination from 'pagination-material-ui'
 
 class PaginationExample extends Component {
-  render() {
-    return (
-      <Pagination total={100} perPage={10} onChange={this.onChange.bind(this)}/>
-    )
+  onChange = (currentPage, limit) => {
+    // Do some pagination thing here
   }
   
-  onChange(currentPage, perPage) {
-    // Do some pagination thing here
+  render() {
+    return (
+      <Pagination total={100} limit={10} onChange={this.onChange}/>
+    )
   }
 }
 
@@ -32,19 +32,9 @@ render(<PaginationExample/>, document.getElementById('app'));
 
 ## Available Props 
 <strong>total</strong> - Total rows count. <strong>Type: number - required</strong> <br/>
-<strong>perPage</strong> - Show rows count on per page.  <strong>Type: number - required</strong> <br/>
-<strong>onChange</strong> - Callback for page change <strong>Type: function required</strong> <br/>
+<strong>limit</strong> - Number of items per page.  <strong>Type: number - required</strong> <br/>
 
 ```
   @currentPage
-  @perPage	
-```
-<strong>texts</strong> - Localization text <strong>Type: object</strong>
-
-```
-{
-  page: 'Page: ',
-  perPage: 'Per Page: ',
-  showing: 'Showing {total} of {from} to {to}'
-}
+  @limit	
 ```
