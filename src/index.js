@@ -8,18 +8,18 @@ const styles = {
     borderTop: '1px solid rgb(224, 224, 224)',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
   },
   elements: {
     display: 'flex',
     alignItems: 'center',
     height: 56,
-    marginLeft: 16,
+    marginLeft: 16
   },
   label: {
     color: '#999',
     fontWeight: 300,
-    fontSize: 12,
+    fontSize: 12
   }
 }
 
@@ -29,14 +29,14 @@ export default class Pagination extends React.Component {
 
     this.state = {
       currentPage: 1,
-      count: 0,
+      count: 0
     }
   }
 
   static propTypes = {
     onChange: PropTypes.func.isRequired,
     total: PropTypes.number.isRequired,
-    limit: PropTypes.number.isRequired,
+    limit: PropTypes.number.isRequired
   }
 
   componentDidMount () {
